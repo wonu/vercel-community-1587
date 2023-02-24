@@ -1,34 +1,22 @@
-# Welcome to Remix!
+## Reproduction steps
 
-- [Remix Docs](https://remix.run/docs)
-
-## Deployment
-
-After having run the `create-remix` command and selected "Vercel" as a deployment target, you only need to [import your Git repository](https://vercel.com/new) into Vercel, and it will be deployed.
-
-If you'd like to avoid using a Git repository, you can also deploy the directory by running [Vercel CLI](https://vercel.com/cli):
+### 1. Install (branch `main`)
 
 ```sh
-npm i -g vercel
-vercel
+$ npx create-remix
+? Where would you like to create your app? ./vercel-community#1587
+? What type of app do you want to create? Just the basics
+? Where do you want to deploy? Choose Remix App Server if you're unsure; it's easy to change deployment targets. Vercel
+? TypeScript or JavaScript? TypeScript
+? Do you want me to run `npm install`? No
 ```
 
-It is generally recommended to use a Git repository, because future commits will then automatically be deployed by Vercel, through its [Git Integration](https://vercel.com/docs/concepts/git).
+### 2. Add `__foo.tsx` and modify `index.tsx` (branch `__foo`)
 
-## Development
+- Works well on local
+- Build fails on `VERCEL_CLI_VERSION=vercel@28.15.5` and above
+- Build succeeds on `VERCEL_CLI_VERSION=vercel@28.15.4` but has server error due to missing `serverBuildTarget`
 
-To run your Remix app locally, make sure your project's local dependencies are installed:
+### 3. Add `serverBuildTarget: "vercel"` (branch `serverBuildTarget`)
 
-```sh
-npm install
-```
-
-Afterwards, start the Remix development server like so:
-
-```sh
-npm run dev
-```
-
-Open up [http://localhost:3000](http://localhost:3000) and you should be ready to go!
-
-If you're used to using the `vercel dev` command provided by [Vercel CLI](https://vercel.com/cli) instead, you can also use that, but it's not needed.
+- Works well on `VERCEL_CLI_VERSION=vercel@28.15.4`
